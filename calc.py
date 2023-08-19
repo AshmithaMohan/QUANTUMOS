@@ -28,38 +28,30 @@ def calculate_temperature(mass):
     temperature = avg_energy / (3.15e7 * mass)  # 3.15e7 is a conversion factor for time
     return temperature
 
+def Calc(arr):
+    plt.figure(figsize=(8, 6))
 
-plt.figure(figsize=(8, 6))
-
-while True:
-    initial_mass_str = input("Enter the initial mass of the black hole (kg) or type 'exit' to quit: ")
-    if initial_mass_str == 'exit':
-        break
-    
-    try:
+    for initial_mass_str in arr:
         initial_mass = float(initial_mass_str)
-    except ValueError:
-        print("Invalid input. Please enter a valid number.")
-        continue
-    
-    t_max = 100
-    delta_t = 1
-    
-    time = np.arange(0, t_max, delta_t)
-    masses_bh = initial_mass * np.exp(-0.1 * time)
 
-    temperature_data = []
+        t_max = 100
+        delta_t = 1
 
-    for i, mass_bh in enumerate(masses_bh):
-        temperature = calculate_temperature(mass_bh)
-        temperature_data.append(temperature)
+        time = np.arange(0, t_max, delta_t)
+        masses_bh = initial_mass * np.exp(-0.1 * time)
 
-    plt.plot(time, temperature_data, label=f"Mass: {initial_mass} kg")
+        temperature_data = []
 
-plt.xlabel("Time (quantum time units)")
-plt.ylabel("Temperature (K)")
-plt.title("Black Hole Temperature vs. Time")
-plt.legend()
-plt.grid()
-plt.tight_layout()
-plt.show()
+        for i, mass_bh in enumerate(masses_bh):
+            temperature = calculate_temperature(mass_bh)
+            temperature_data.append(temperature)
+
+        plt.plot(time, temperature_data, label=f"Mass: {initial_mass} kg")
+
+    plt.xlabel("Time (quantum time units)")
+    plt.ylabel("Temperature (K)")
+    plt.title("Black Hole Temperature vs. Time")
+    plt.legend()
+    plt.grid()
+    plt.tight_layout()
+    plt.savefig('./static/plot.png')
